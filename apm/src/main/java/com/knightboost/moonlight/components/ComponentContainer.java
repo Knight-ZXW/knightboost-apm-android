@@ -1,12 +1,12 @@
-package com.knightboost.apm.components;
+package com.knightboost.moonlight.components;
 
 /**
  * created by Knight-ZXW on 2021/11/10
  */
 
 
-import com.knightboost.apm.inject.Deferred;
-import com.knightboost.apm.inject.Provider;
+import com.knightboost.moonlight.inject.Deferred;
+import com.knightboost.moonlight.inject.Provider;
 
 import java.util.Set;
 

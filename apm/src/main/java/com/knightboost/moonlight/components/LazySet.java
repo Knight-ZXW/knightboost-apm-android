@@ -1,7 +1,7 @@
-package com.knightboost.apm.components;
+package com.knightboost.moonlight.components;
 
 
-import com.knightboost.apm.inject.Provider;
+import com.knightboost.moonlight.inject.Provider;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -14,7 +14,7 @@ import java.util.concurrent.ConcurrentHashMap;
  *
  * <p>The actual set is materialized only when first requested via {@link #get()}.
  *
- * <p>As new values are added to the set via {@link #add(com.knightboost.apm.inject.Provider)}, the underlying set is updated
+ * <p>As new values are added to the set via {@link #add(com.knightboost.moonlight.inject.Provider)}, the underlying set is updated
  * with the new value.
  */
 class LazySet<T> implements Provider<Set<T>> {

@@ -1,7 +1,7 @@
 package com.knightboost.apm;
 
 
-import com.knightboost.apm.util.CollectionUtils;
+import com.knightboost.moonlight.util.CollectionUtils;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

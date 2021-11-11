@@ -1,6 +1,6 @@
-package com.knightboost.apm.components;
+package com.knightboost.moonlight.components;
 
-import com.knightboost.apm.inject.Provider;
+import com.knightboost.moonlight.inject.Provider;
 
 import java.util.Set;
 

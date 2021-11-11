@@ -1,4 +1,4 @@
-package com.knightboost.apm.events;
+package com.knightboost.moonlight.events;
 
 import com.google.firebase.components.Preconditions;
 
