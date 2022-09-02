@@ -1,6 +1,7 @@
 package com.knightboost.moonlight.events;
 
-import com.google.firebase.components.Preconditions;
+import androidx.core.util.Preconditions;
+
 
 /**
  * Generic event object identified by its type and payload of that type.
@@ -14,16 +15,28 @@ public class Event<T> {
     private final T payload;
 
     public Event(Class<T> type, T payload) {
-        this.type = Preconditions.checkNotNull(type);
-        this.payload = Preconditions.checkNotNull(payload);
+        if (type == null) {
+            throw new NullPointerException();
+
+        }
+        if (payload == null) {
+            throw new NullPointerException();
+
+        }
+        this.type = type;
+        this.payload = payload;
     }
 
-    /** The type of the event's payload. */
+    /**
+     * The type of the event's payload.
+     */
     public Class<T> getType() {
         return type;
     }
 
-    /** The payload of the event. */
+    /**
+     * The payload of the event.
+     */
     public T getPayload() {
         return payload;
     }

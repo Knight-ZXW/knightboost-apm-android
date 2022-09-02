@@ -1,11 +1,6 @@
-dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-    repositories {
-        google()
-        mavenCentral()
-        jcenter() // Warning: this repository is going to shut down soon
-    }
-}
 rootProject.name = "MoonLightApm"
 include ':app'
 include ':apm'
+include ':fake-android'
+include ':free-android'
+//include ':free-android-bridge'

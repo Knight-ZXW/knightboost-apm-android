@@ -1,10 +1,11 @@
 package com.knightboost.apm;
 
 
+import androidx.annotation.Nullable;
+
 import com.knightboost.moonlight.util.CollectionUtils;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.TestOnly;
 
 import java.util.Map;
@@ -23,7 +24,8 @@ public class User {
     private @Nullable String email;
 
     /** Unique identifier of the user. */
-    private @Nullable String id;
+    private @Nullable
+    String id;
 
     /** Username of the user. */
     private @Nullable
@@ -36,10 +38,10 @@ public class User {
      * Additional arbitrary fields, as stored in the database (and sometimes as sent by clients). All
      * data from `self.other` should end up here after store normalization.
      */
-    private @Nullable Map<String, @NotNull String> other;
+    private @Nullable Map<String,  String> other;
 
     /** unknown fields, only internal usage. */
-    private @Nullable Map<String,@NotNull Object> unknown;
+    private @Nullable Map<String, Object> unknown;
 
     public User() {}
 
@@ -150,7 +152,7 @@ public class User {
      */
     @TestOnly
     @Nullable
-    Map<String, @NotNull Object> getUnknown() {
+    Map<String,  Object> getUnknown() {
         return unknown;
     }
 }

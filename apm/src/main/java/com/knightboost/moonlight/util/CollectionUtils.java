@@ -1,8 +1,7 @@
 package com.knightboost.moonlight.util;
 
-import org.jetbrains.annotations.ApiStatus;
+
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,7 +17,6 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Util class for Collections
  */
-@ApiStatus.Internal
 public final class CollectionUtils {
 
     private CollectionUtils() {
@@ -49,8 +47,8 @@ public final class CollectionUtils {
      * @param <V> the type of map values
      * @return the shallow copy of map
      */
-    public static <K, V> @Nullable Map<K, @NotNull V> newConcurrentHashMap(
-            @Nullable Map<K, @NotNull V> map) {
+    public static <K, V>  Map<K,  V> newConcurrentHashMap(
+             Map<K, V> map) {
         if (map != null) {
             return new ConcurrentHashMap<>(map);
         } else {
@@ -66,7 +64,7 @@ public final class CollectionUtils {
      * @param <V> the type of map values
      * @return a new {@link HashMap} or {@code null} if parameter is {@code null}
      */
-    public static <K, V> @Nullable Map<K, @NotNull V> newHashMap(@Nullable Map<K, @NotNull V> map) {
+    public static <K, V>  Map<K,  V> newHashMap( Map<K,  V> map) {
         if (map != null) {
             return new HashMap<>(map);
         } else {
@@ -81,7 +79,7 @@ public final class CollectionUtils {
      * @param <T>  the type of list entries
      * @return a new {@link ArrayList} or {@code null} if parameter is {@code null}
      */
-    public static <T> @Nullable List<T> newArrayList(@Nullable List<T> list) {
+    public static <T>  List<T> newArrayList( List<T> list) {
         if (list != null) {
             return new ArrayList<>(list);
         } else {
