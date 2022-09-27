@@ -2,7 +2,13 @@ plugins {
     id 'com.android.library'
     id 'kotlin-android'
 }
-//apply plugin: 'com.google.gms.google-services'
+
+plugins{
+    id 'knightboost.apm.android.gradle'
+}
+KnightBoostAPM {
+    autoUploadProguardMapping = true
+}
 android {
     compileSdk 30
 
