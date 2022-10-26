@@ -88,12 +88,12 @@ internal object BlockCanaryInternal {
     }
 
     fun start() {
-        LooperMonitor.ofMainThread().addListener(messageListener)
+        LooperMonitor.mainThreadLooperMonitor().addListener(messageListener)
         stackSampler.startSampling()
     }
 
     fun stop() {
-        LooperMonitor.ofMainThread().removeListener(messageListener)
+        LooperMonitor.mainThreadLooperMonitor().removeListener(messageListener)
         stackSampler.stopSampling()
     }
 

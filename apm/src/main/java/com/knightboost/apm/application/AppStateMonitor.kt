@@ -13,9 +13,6 @@ object AppStateMonitor : Application.ActivityLifecycleCallbacks {
 
     private val activityToResumedMap: WeakHashMap<Activity, Boolean> = WeakHashMap()
 
-    /* Count for TRACE_STARTED_NOT_STOPPED */
-    private val tsnsCount: AtomicInteger = AtomicInteger(0)
-
     private val clock = Clock()
 
     private var isRegisteredForLifecycleCallbacks = false

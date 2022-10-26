@@ -5,36 +5,36 @@ import java.util.*
 /**
  * Looper 消息记录信息
  */
-class MessageRecordInfo {
+class MessageInfo {
 
     companion object {
 
-        private var sPool = LinkedList<MessageRecordInfo>()
+        private var sPool = LinkedList<MessageInfo>()
 
         @JvmStatic
-        fun obtain(): MessageRecordInfo {
+        fun obtain(): MessageInfo {
             synchronized(sPool){
                 if (sPool.size>0){
                     return sPool.pollFirst()!!
                 }
             }
-            return MessageRecordInfo()
+            return MessageInfo()
         }
 
         @JvmStatic
-        fun recycle(messageRecordInfo: MessageRecordInfo) {
-            messageRecordInfo.msgState = 0
-            messageRecordInfo.msgType = 0
-            messageRecordInfo.what=0
-            messageRecordInfo.msgCounts=0
-            messageRecordInfo.cpuDuration=0
-            messageRecordInfo.wallDuration=0
-            messageRecordInfo.beginTime=0
-            messageRecordInfo.targetHandler=null
-            messageRecordInfo.callback=null
-            messageRecordInfo.wallDuration=0
+        fun recycle(messageInfo: MessageInfo) {
+            messageInfo.msgState = 0
+            messageInfo.msgType = 0
+            messageInfo.what=0
+            messageInfo.msgCounts=0
+            messageInfo.cpuDuration=0
+            messageInfo.wallDuration=0
+            messageInfo.beginTime=0
+            messageInfo.targetHandler=null
+            messageInfo.callback=null
+            messageInfo.wallDuration=0
             synchronized(sPool){
-                sPool.add(messageRecordInfo)
+                sPool.add(messageInfo)
             }
         }
 

@@ -2,7 +2,6 @@ package com.knightboost.android.gradle.tasks
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.DirectoryProperty
-import org.gradle.api.file.FileCollection
 import org.gradle.api.file.RegularFile
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.provider.Property
@@ -19,8 +18,8 @@ abstract class UploadProguardMappingsTask : DefaultTask() {
     @get:InputDirectory
     abstract val uuidDirectory: DirectoryProperty
 
-    @get:InputFiles
-    abstract var mappingFiles:RegularFileProperty
+    @get:InputFile
+    abstract val mappingFiles: RegularFileProperty
 
     @get:Internal
     val uuidFile: Provider<RegularFile>

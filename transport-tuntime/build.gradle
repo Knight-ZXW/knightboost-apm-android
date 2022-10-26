@@ -1,0 +1,31 @@
+plugins {
+    id 'java-library'
+    id 'org.jetbrains.kotlin.jvm'
+    id 'kotlin-kapt'
+}
+apply plugin: 'kotlin-kapt'
+kapt {
+    arguments {
+        // Source dir to output files to. This should usually be the src/main/java or src/main/kotlin
+        // path of the project you’re running this in.
+        // REQUIRED
+        arg("avkSrc", file("src/main/java"))
+
+        // Boolean option to ignore nested classes. By default, AVK will error out when it encounters
+        // a nested non-AutoValue class as it has no means of safely converting the class since its
+        // references are always qualified. This option can be set to true to make AVK just skip them
+        // and emit a warning.
+        // AVK will automatically convert nested AutoValue and enum classes along the way.
+        // OPTIONAL. False by default.
+        arg("avkIgnoreNested", "true")
+    }
+}
+java {
+  sourceCompatibility = JavaVersion.VERSION_1_8
+  targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+dependencies {
+    implementation('com.google.auto.value:auto-value:1.5.2')
+    implementation project(path: ':transport-api')
+}

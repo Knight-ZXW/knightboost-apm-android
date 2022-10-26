@@ -46,10 +46,12 @@ public class LooperMonitor implements MessageQueue.IdleHandler {
         }
     }
 
-    private static  LooperMonitor mainMonitor = new LooperMonitor(android.os.Looper.getMainLooper());
+    private static final class MainMonitorHolder {
+        static final LooperMonitor mainMonitor = new LooperMonitor(Looper.getMainLooper());
+    }
 
-    public static LooperMonitor ofMainThread(){
-        return mainMonitor;
+    public static LooperMonitor mainThreadLooperMonitor(){
+        return MainMonitorHolder.mainMonitor;
     }
 
 

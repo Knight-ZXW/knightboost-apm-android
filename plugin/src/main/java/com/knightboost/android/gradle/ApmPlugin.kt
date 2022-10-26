@@ -3,21 +3,20 @@ package com.knightboost.android.gradle
 import com.android.build.gradle.AppExtension
 import com.android.build.gradle.api.ApplicationVariant
 import com.knightboost.android.gradle.ApmPropertiesFileProvider.getPropertiesFilePath
-import com.knightboost.android.gradle.KnightTasksProvider.getBundleTask
-import com.knightboost.android.gradle.KnightTasksProvider.getMergeAssetsProvider
-import com.knightboost.android.gradle.KnightTasksProvider.getPackageBundleTask
-import com.knightboost.android.gradle.KnightTasksProvider.getPackageProvider
-import com.knightboost.android.gradle.KnightTasksProvider.getPreBundleTask
-import com.knightboost.android.gradle.KnightTasksProvider.getTransformerTask
+import com.knightboost.android.gradle.AndroidBuildTasksProvider.getBundleTask
+import com.knightboost.android.gradle.AndroidBuildTasksProvider.getMappingFile
+import com.knightboost.android.gradle.AndroidBuildTasksProvider.getMergeAssetsProvider
+import com.knightboost.android.gradle.AndroidBuildTasksProvider.getPackageBundleTask
+import com.knightboost.android.gradle.AndroidBuildTasksProvider.getPackageProvider
+import com.knightboost.android.gradle.AndroidBuildTasksProvider.getPreBundleTask
+import com.knightboost.android.gradle.AndroidBuildTasksProvider.getTransformerTask
 import com.knightboost.android.gradle.extensions.ApmPluginExtension
 import com.knightboost.android.gradle.tasks.*
-import com.knightboost.android.gradle.util.AgpVersions
 import com.knightboost.android.gradle.util.ApmPluginUtil.capitalizeUS
 import com.knightboost.android.gradle.util.ApmPluginUtil.isMinificationEnabled
 import com.knightboost.android.gradle.util.ApmPluginUtil.withLogging
 import com.knightboost.android.gradle.util.info
 import org.gradle.api.*
-import org.gradle.api.tasks.StopExecutionException
 import org.gradle.api.tasks.TaskProvider
 import org.slf4j.LoggerFactory
 import java.io.File
@@ -61,6 +60,7 @@ class ApmPlugin : Plugin<Project> {
                         project,
                         variant
                     )
+                    var mappingFile: File? = null
 
                     val isDebuggable = variant.buildType.isDebuggable
 
@@ -81,6 +81,8 @@ class ApmPlugin : Plugin<Project> {
                         packageBundleTaskProvider = withLogging(project.logger, "packageBundleTask") {
                             getPackageBundleTask(project, variant.name)
                         }
+
+                        mappingFile = getMappingFile(project,variant)
                     } else {
                         project.logger.info {
                             "Minification is not enabled for variant ${variant.name}."
@@ -116,9 +118,10 @@ class ApmPlugin : Plugin<Project> {
                             this.dependsOn(generateUuidTask)
                             this.asyncUpload.set(true)
                             this.uuidDirectory.set(generateUuidTask.flatMap(GenerateProguardUuidTask::outputDirectory))
-                            this.mappingFiles.set(KnightTasksProvider.getMappingFile(project,variant))
+                            mappingFile?.let {
+                                this.mappingFiles.set(mappingFile)
+                            }
                             this.autoUploadProguardMapping.set(extension.autoUploadProguardMapping)
-                            //TODO appKey
                         }
 
                         // add uuid file to asset

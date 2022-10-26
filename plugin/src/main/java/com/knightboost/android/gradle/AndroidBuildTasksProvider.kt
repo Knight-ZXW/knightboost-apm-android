@@ -8,7 +8,7 @@ import org.gradle.api.*
 import org.gradle.api.tasks.TaskProvider
 import java.io.File
 
-internal object KnightTasksProvider {
+internal object AndroidBuildTasksProvider {
 
     /**
      * Returns the transformer task for the given project and variant.

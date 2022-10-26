@@ -3,6 +3,12 @@ plugins {
     id 'kotlin-android'
 }
 
+apply plugin: 'knightboost.apm.android.gradle'
+
+KnightBoostAPM {
+    autoUploadProguardMapping = true
+}
+
 android {
     compileSdk 30
 
@@ -18,7 +24,7 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug{
@@ -50,4 +56,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     implementation project(path:":apm")
     implementation project(path:":free-android")
+
+    // define a BOM and its version
+    implementation(platform("com.squareup.okhttp3:okhttp-bom:4.10.0"))
+    // define any required OkHttp artifacts without version
+    implementation("com.squareup.okhttp3:okhttp")
 }

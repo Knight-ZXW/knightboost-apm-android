@@ -1,4 +1,4 @@
-package com.knightboost.apm.appstartup
+package com.knightboost.apm.appstart
 
 import android.app.Activity
 import android.app.Application
@@ -11,29 +11,27 @@ import com.knightboost.apm.common.util.Timer
 import java.lang.ref.WeakReference
 
 /**
- * 应用启动性能追踪 (只针对 冷启动场景),  温启动场景 可以在 页面启动监控中覆盖
- *
- *  冷启动、温启动、暖启动 区分
- *  <img width="400" height="200" src="https://developer.android.com/static/topic/performance/vitals/images/startup-modes-r1.png" alt="">
- *
- *  应用启动指标
- *      x. 进程创建耗时 (从Application开始创建 到 Application 创建结束(Application onCreate 执行结束))
- *      y. 首帧可见耗时
- *          从进程创建 到首个页面 首帧可见
- *          1.TTID (the time to initial display)
+ * 应用启动(冷启动)性能追踪
  */
-class AppStartupTracer(
+class AppStartTracer(
 ) : Application.ActivityLifecycleCallbacks {
+
+    class  Launch(
+        val trampoline: Boolean,
+        val startUptimeMillis: Long,
+        val startRealtimeMillis: Long,
+        val endUptimeMillis: Long,
+    )
 
     companion object {
 
-        private var instance: AppStartupTracer? = null
+        private var instance: AppStartTracer? = null
         @JvmStatic
-        fun getInstance(): AppStartupTracer {
+        fun getInstance(): AppStartTracer {
             val instance_ = instance
             if (instance_ == null) {
                 synchronized(this) {
-                    val tracer = AppStartupTracer()
+                    val tracer = AppStartTracer()
                     instance = tracer
                     return tracer
                 }

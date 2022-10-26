@@ -1,4 +1,4 @@
-package com.knightboost.apm.appstartup
+package com.knightboost.apm.appstart
 
 import android.app.Application
 
