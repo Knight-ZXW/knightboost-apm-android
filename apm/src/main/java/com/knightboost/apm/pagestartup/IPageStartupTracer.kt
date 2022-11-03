@@ -1,6 +1,6 @@
 package com.knightboost.apm.pagestartup
 
-import com.knightboost.apm.model.Span
+import com.knightboost.apm.model.DepercatedSpan
 
 /**
  * tracer for trace page start up metric
@@ -18,8 +18,8 @@ interface IPageStartupTracer {
      */
     fun end();
 
-    fun addSubSpan(span: Span)
+    fun addSubSpan(span: DepercatedSpan)
 
-    fun beginSubSpan(name: String, begin: Long): Span
+    fun beginSubSpan(name: String, begin: Long): DepercatedSpan
 
 }

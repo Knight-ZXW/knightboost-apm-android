@@ -101,7 +101,7 @@ class AppStartTracer(
             return
         }
         launchActivity = WeakReference(activity)
-        onCreateTime = clock.getTime()
+        onCreateTime = Clock.getTimer()
         //todo tooLateToInitUi detect
     }
 
@@ -113,14 +113,14 @@ class AppStartTracer(
         if (onStartTime!=null){
             return
         }
-        onStartTime =clock.getTime()
+        onStartTime =Clock.getTimer()
     }
 
     override fun onActivityResumed(activity: Activity) {
         if (onStartTime!=null){
             return
         }
-        onResumeTime =clock.getTime()
+        onResumeTime =Clock.getTimer()
         appStartActivity =WeakReference(activity)
 
         //Log the app start trace in a non-main thread

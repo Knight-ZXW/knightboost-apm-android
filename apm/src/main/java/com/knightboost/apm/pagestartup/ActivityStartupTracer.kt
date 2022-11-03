@@ -7,7 +7,7 @@ import android.os.Bundle
 import android.view.FrameMetrics
 import android.view.Window
 import com.knightboost.apm.common.util.Clock
-import com.knightboost.apm.model.Span
+import com.knightboost.apm.model.DepercatedSpan
 import com.knightboost.apm.util.ApmExecutors
 
 class ActivityStartupTracer(private val activity: Activity) : PageStartupTracer(), Application.ActivityLifecycleCallbacks {
@@ -27,7 +27,7 @@ class ActivityStartupTracer(private val activity: Activity) : PageStartupTracer(
         if (onActivityStartedCallTime == 0L) {
             onActivityStartedCallTime = Clock.getCurrentTimestampMicros()
             createToStartCostTime = onActivityCreatedCallTime - onActivityCreatedCallTime
-            val span = Span("createToStart", createToStartCostTime)
+            val span = DepercatedSpan("createToStart", createToStartCostTime)
             addSubSpan(span)
         }
     }
@@ -37,7 +37,7 @@ class ActivityStartupTracer(private val activity: Activity) : PageStartupTracer(
         if (onActivityResumeCallTime == 0L) {
             onActivityCreatedCallTime = Clock.getCurrentTimestampMicros()
             startToResumeCostTime = onActivityCreatedCallTime - onActivityCreatedCallTime
-            val span = Span("startToResume", startToResumeCostTime)
+            val span = DepercatedSpan("startToResume", startToResumeCostTime)
             addSubSpan(span)
         }
 

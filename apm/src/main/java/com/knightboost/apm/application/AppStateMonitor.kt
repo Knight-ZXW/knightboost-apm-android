@@ -7,13 +7,10 @@ import android.os.Bundle
 import com.knightboost.apm.common.util.Clock
 import com.knightboost.apm.common.util.Timer
 import java.util.*
-import java.util.concurrent.atomic.AtomicInteger
 
 object AppStateMonitor : Application.ActivityLifecycleCallbacks {
 
     private val activityToResumedMap: WeakHashMap<Activity, Boolean> = WeakHashMap()
-
-    private val clock = Clock()
 
     private var isRegisteredForLifecycleCallbacks = false
 
@@ -90,7 +87,7 @@ object AppStateMonitor : Application.ActivityLifecycleCallbacks {
         // 3. app already in foreground, current activity is replaced by another activity, or the
         // current activity was paused then resumed without onStop, for example by an AlertDialog
         if (activityToResumedMap.isEmpty()) {
-            resumeTime = clock.getTime()
+            resumeTime = Clock.getTimer()
             activityToResumedMap[activity] = true
             if (isColdStart) {
                 // case 1:app startup
@@ -116,7 +113,7 @@ object AppStateMonitor : Application.ActivityLifecycleCallbacks {
         if (activityToResumedMap.containsKey(activity)){
             activityToResumedMap.remove(activity)
             if (activityToResumedMap.isEmpty()){
-                stopTime = clock.getTime()
+                stopTime = Clock.getTimer()
                 //todo update appState background
             }
         }

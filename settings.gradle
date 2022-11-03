@@ -1,8 +1,0 @@
-rootProject.name = "MoonLightApm"
-include ':app'
-include ':apm'
-include ':fake-android'
-include ':free-android'
-include ':plugin'
-include ':transport-api'
-include ':transport-tuntime'

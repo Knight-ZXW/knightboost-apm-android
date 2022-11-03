@@ -1,35 +1,44 @@
 package com.knightboost.apm.common.util
 
-class Clock {
+import java.util.concurrent.TimeUnit
 
-    /**
-     * Return a Timer object that has current time from Android System.
-     *
-     * @return Timer object
-     */
-    fun getTime(): Timer {
-        return Timer()
-    }
+class Clock {
 
     companion object {
         private val clock: Clock = Clock()
 
-        private val anchor = clock.getTime()
+        private val anchor = AnchoredClock.create()
 
-        @JvmStatic
-        fun default(): Clock {
+        @JvmStatic fun default(): Clock {
             return clock
         }
 
-        @JvmStatic
-        fun getCurrentTimestampMicros():Long {
-            return  anchor.currentTimestampMicros
+        /** Returns the number of nanoseconds since the epoch (00:00:00, 01-Jan-1970, GMT). */
+        @JvmStatic fun now(): Long {
+            return TimeUnit.MILLISECONDS.toNanos(System.currentTimeMillis());
         }
 
-        @JvmStatic
-        fun getCurrentTimestampMs():Long{
-            return anchor.currentTimestampMicros/1000;
+        @JvmStatic fun nanoTime(): Long {
+            return System.nanoTime();
+        }
+
+        @JvmStatic fun getCurrentTimestampMicros(): Long {
+            return anchor.now()
+        }
+
+        @JvmStatic fun getCurrentTimestampMs(): Long {
+            return anchor.now() / 1000;
+        }
+
+        /**
+         * Return a Timer object that has current time from Android System.
+         *
+         * @return Timer object
+         */
+        @JvmStatic fun getTimer(): Timer {
+            return Timer();
         }
 
     }
+
 }

@@ -12,7 +12,7 @@ import com.knightboost.apm.common.util.Timer
  */
 internal class ApmSdkInitializer : Initializer<ApmSdkBaseInit> {
     init {
-        APP_START_TIME = Clock().getTime()
+        APP_START_TIME = Clock.getTimer()
     }
 
     companion object{

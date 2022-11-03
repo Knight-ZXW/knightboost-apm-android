@@ -2,7 +2,7 @@ package com.knightboost.apm.model
 
 import com.knightboost.apm.common.util.Clock
 
-class Span {
+class DepercatedSpan {
 
     private val name: String
 
@@ -16,7 +16,7 @@ class Span {
      */
     private var endTime: Long? = null
 
-    private var subSpans = mutableListOf<Span>()
+    private var subSpans = mutableListOf<DepercatedSpan>()
 
 
     constructor(
@@ -45,13 +45,13 @@ class Span {
         }
     }
 
-    fun startSubSpan(name: String, beginTime: Long):Span {
-        val subSpan = Span(name, beginTime)
+    fun startSubSpan(name: String, beginTime: Long):DepercatedSpan {
+        val subSpan = DepercatedSpan(name, beginTime)
         subSpans.add(subSpan)
         return subSpan
     }
 
-    fun addSubSpan(subSpan: Span){
+    fun addSubSpan(subSpan: DepercatedSpan){
         subSpans.add(subSpan)
     }
 
