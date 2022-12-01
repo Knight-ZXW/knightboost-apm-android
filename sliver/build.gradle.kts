@@ -13,6 +13,11 @@ android {
         targetSdk = Config.Android.targetSdkVersion
         minSdk = Config.Android.minSdkVersionNdk
         testInstrumentationRunner = Config.TestLibs.androidJUnitRunner
+        externalNativeBuild {
+            cmake {
+                cppFlags += ""
+            }
+        }
     }
 
     buildTypes {
@@ -23,6 +28,12 @@ android {
     }
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+    externalNativeBuild {
+        cmake {
+            path = file("src/main/cpp/CMakeLists.txt")
+            version = "3.18.1"
+        }
     }
 
 }
