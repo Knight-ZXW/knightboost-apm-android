@@ -15,7 +15,7 @@ android {
         testInstrumentationRunner = Config.TestLibs.androidJUnitRunner
         externalNativeBuild {
             cmake {
-                cppFlags += ""
+                cppFlags += "-std=c++14"
             }
         }
     }
@@ -26,12 +26,16 @@ android {
             consumerProguardFiles("proguard-rules.pro")
         }
     }
+    buildFeatures {
+        prefab = true
+    }
+
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
     externalNativeBuild {
         cmake {
-            path = file("src/main/cpp/CMakeLists.txt")
+            path = file("CMakeLists.txt")
             version = "3.18.1"
         }
     }
@@ -48,4 +52,6 @@ dependencies {
     testImplementation(kotlin(Config.kotlinStdLib, KotlinCompilerVersion.VERSION))
     testImplementation(Config.TestLibs.robolectric)
     testImplementation(Config.TestLibs.kotlinTestJunit)
+
+    implementation("com.bytedance:bytehook:1.0.5")
 }
