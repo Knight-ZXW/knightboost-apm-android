@@ -31,6 +31,8 @@ include_directories(src/main/cpp)
 add_subdirectory(${utils_DIR} ${CMAKE_CURRENT_BINARY_DIR}/utils)
 
 aux_source_directory(src/main/cpp/art SRC_DIR_ART)
+include_directories(src/main/cpp/art)
+
 
 add_library( # Sets the name of the library.
         sliver
@@ -40,6 +42,7 @@ add_library( # Sets the name of the library.
         ${SRC_DIR_ART}
         # Provides a relative path to your source file(s).
         src/main/cpp/sliver.cpp
+        src/main/cpp/fetch_stack_visitor.cpp
         )
 
 # Searches for a specified prebuilt library and stores the path as a
@@ -55,7 +58,7 @@ find_library( # Sets the name of the path variable.
         log)
 
 find_package(bytehook REQUIRED CONFIG)
-
+find_package(xdl REQUIRED CONFIG)
 # Specifies libraries CMake should link to your target library. You
 # can link multiple libraries, such as libraries you define in this
 # build script, prebuilt third-party libraries, or system libraries.
@@ -66,4 +69,5 @@ target_link_libraries( # Specifies the target library.
         # Links the target library to the log library
         # included in the NDK.
         ${log-lib}
+        xdl::xdl
         bytehook::bytehook)

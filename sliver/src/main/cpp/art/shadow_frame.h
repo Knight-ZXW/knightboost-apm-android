@@ -8,9 +8,10 @@
 #include <jni.h>
 #include <memory>
 
+namespace kbArt {
 
-class LockCountData{
-  void* monitors_;
+class LockCountData {
+  void *monitors_;
 };
 
 // ref: https://cs.android.com/android/platform/superproject/+/master:art/runtime/interpreter/shadow_frame.h;drc=add3d02a9be211efeafa6cff8b27bdf7e44e4081;l=50
@@ -35,17 +36,17 @@ class ShadowFrame {
   };
  public:
   // Link to previous shadow frame or null;
-  ShadowFrame* link_;
+  ShadowFrame *link_;
   // ArtMethod* method_;
-  void * method;
+  void *method;
   //JValue* result_register_;
-  void * result_register_;
+  void *result_register_;
 
-  const uint16_t* dex_pc_ptr_;
+  const uint16_t *dex_pc_ptr_;
   // Dex instruction base of the code item.
-  const uint16_t* dex_instructions_;
+  const uint16_t *dex_instructions_;
   LockCountData lockCountData;
-  const uint32_t  dex_pc_;
+  const uint32_t dex_pc_;
   int16_t cached_hotness_countdown_;
   int16_t hotness_countdown_;
   // This is a set of ShadowFrame::FrameFlags which denote special states this frame is in.
@@ -63,12 +64,10 @@ class ShadowFrame {
   // copy of vX.
   uint32_t vregs_[0];
 
-
-
  public:
-  ~ShadowFrame(){}
-
+  ~ShadowFrame() {}
 
 };
+}
 
 #endif //KB_SHADOW_FRAME_H_

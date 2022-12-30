@@ -54,4 +54,5 @@ dependencies {
     testImplementation(Config.TestLibs.kotlinTestJunit)
 
     implementation("com.bytedance:bytehook:1.0.5")
+    implementation("io.hexhacking:xdl:1.2.1")
 }

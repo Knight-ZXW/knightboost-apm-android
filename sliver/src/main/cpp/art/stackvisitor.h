@@ -5,23 +5,40 @@
 #ifndef KB_STACKVISITOR_H_
 #define KB_STACKVISITOR_H_
 
-class StackVisitorR {
+#include "shadow_frame.h"
+namespace kbArt {
+const size_t STRUCT_COMPAT = sizeof(size_t) * 50;
+
+class StackVisitor {
  public:
-  enum class StackWalkKindR {
+  enum class StackWalkKind {
     kIncludeInlinedFrames,
     kSkipInlinedFrames
   };
 
-  virtual ~StackVisitorR() {};
+  virtual ~StackVisitor() {};
 
   // Return 'true' if we should continue to visit more frames, 'false' to stop.
-  virtual bool VisitFrame() =0;
+  virtual bool VisitFrame() = 0;
 
-  void * thread_  = nullptr;
-  const StackWalkKindR walk_kind_ = StackWalkKindR::kIncludeInlinedFrames;
+  void *thread_ = nullptr;
+  const StackWalkKind walk_kind_ = StackWalkKind::kIncludeInlinedFrames;
+  ShadowFrame *cur_shadow_frame_ = nullptr;
+  void **cur_quick_frame_ = nullptr;
 
-
-
+  //保证有足够的空间存放其他变量; detail see:
+  //https://cs.android.com/android/platform/superproject/+/master:art/runtime/stack.h
+  char param[STRUCT_COMPAT];
+ public:
+  void *GetMethod(){
+    if (cur_shadow_frame_!= nullptr){
+      return cur_shadow_frame_->method;
+    } else if (cur_quick_frame_!= nullptr){
+      return *cur_quick_frame_;
+    }
+    return nullptr;
+  }
 };
+}
 
 #endif //KB_STACKVISITOR_H_
