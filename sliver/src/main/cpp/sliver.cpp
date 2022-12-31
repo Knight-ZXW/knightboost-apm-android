@@ -9,6 +9,8 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void* reserved){
     return -1;
   }
   ArtHelper::init(env);
+//  LOGE("sliver","init success");
+  return JNI_VERSION_1_6;
 }
 
 extern "C"
@@ -22,6 +24,7 @@ Java_com_knightboost_sliver_Sliver_nGetStackTrace(JNIEnv *env,
   void *thread = ArtHelper::SuspendThreadByThreadId(*tid_p,
                                                     SuspendReason::kForUserCode,
                                                     &timeOut);
+  LOGE("sliver","SuspendThreadByThreadId %d",*tid_p);
   FetchStackVisitor visitor = FetchStackVisitor(thread, nullptr, nullptr);
   ArtHelper::StackVisitorWalkStack(&visitor, false);
   ArtHelper::Resume(thread,SuspendReason::kForUserCode);

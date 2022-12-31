@@ -21,6 +21,12 @@
         android:text="CPU监控测试"
         />
 
+    <Button
+        android:id="@+id/btn_sliver_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="sliver抓调用栈测试"
+        />
 
     <Button
         android:id="@+id/btn_stop"

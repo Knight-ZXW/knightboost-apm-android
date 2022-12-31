@@ -1,6 +1,7 @@
 package com.knightboost.sliver;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 
 import java.lang.reflect.Field;
 
@@ -14,8 +15,11 @@ public class Sliver {
         if (!initialized) {
             initialized = true;
             try {
-                System.loadLibrary("sliver.so");
+                System.loadLibrary("xdl");
+                System.loadLibrary("bytehook");
+                System.loadLibrary("sliver");
             } catch (Throwable e) {
+                e.printStackTrace();
                 initializeSuccess =false;
                 //TODO add native init function
             }
@@ -26,8 +30,14 @@ public class Sliver {
         return initialized;
     }
 
+    /**
+     * 注：不能在当前线程获取同线程的调用栈
+     * @param thread
+     * @return
+     */
     public static String getSackTrace(Thread thread){
         long threadPeer = getThreadPeer(thread);
+        Log.e("zxw","threadPeer is"+threadPeer);
         nGetStackTrace(thread,threadPeer);
         return "";
     }

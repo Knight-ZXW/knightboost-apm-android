@@ -7,7 +7,7 @@
 
 #include "shadow_frame.h"
 namespace kbArt {
-const size_t STRUCT_COMPAT = sizeof(size_t) * 50;
+const size_t STRUCT_COMPAT = sizeof(size_t) * 200;
 
 class StackVisitor {
  public:
@@ -28,7 +28,7 @@ class StackVisitor {
 
   //保证有足够的空间存放其他变量; detail see:
   //https://cs.android.com/android/platform/superproject/+/master:art/runtime/stack.h
-  char param[STRUCT_COMPAT];
+  char param[STRUCT_COMPAT]={};
  public:
   void *GetMethod(){
     if (cur_shadow_frame_!= nullptr){

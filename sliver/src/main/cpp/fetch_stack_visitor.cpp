@@ -20,6 +20,7 @@ class FetchStackVisitor : public StackVisitor {
       LOGV("FetchStackVisitor","this method is runtimeMethod,so we should ignore it");
     }
     const std::string &methodSignature = ArtHelper::PrettyMethod(method, true);
+    LOGV("FetchStackVisitor","fetch stack %s",methodSignature.c_str());
     if (StackVisitorCallback!= nullptr){
       return StackVisitorCallback(method,StackVisitorData);
     }

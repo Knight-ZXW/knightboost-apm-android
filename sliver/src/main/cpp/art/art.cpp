@@ -40,37 +40,27 @@ int findOffset(void *start, int regionStart, int regionEnd, T target) {
   for (int i = regionStart; i < regionEnd; i += 4) {
     T *current_value = reinterpret_cast<T *>(c_start + i);
     if (target == *current_value) {
+      LOGE("artHelper","find target %p",current_value);
       return i;
     }
   }
   return -1;
 }
 
-int ArtHelper::init(JNIEnv *env) {
-  char api_level_str[5];
-  __system_property_set("ro.build.version.sdk", api_level_str);
-  int api_level = atoi(api_level_str);
-  ArtHelper::api = api_level;
-  JavaVM *javaVM;
-  env->GetJavaVM(&javaVM);
+//int dl_iterate_callback(dl_phdr_info *info, size_t size, void *data) {
+//  // find libart
+//  if (strstr(info->dlpi_name, "libart.so")) {
+//    libart = info->dlpi_name;
+//  }
+//  return 0;
+//}
 
-  JavaVMExt *javaVMExt = reinterpret_cast<JavaVMExt *>(javaVM);
-  void *runtime = javaVMExt->runtime;
+static int load_symbols() {
+  LOGV("ArtHelper", "start load_symbols");
+  void *handle = xdl_open("/apex/com.android.art/lib64/libart.so",
+                          XDL_TRY_FORCE_LOAD);
+  LOGV("ArtHelper", "handle is %p",handle);
 
-  LOGV("ArtHelper", "runtime ptr: %p", runtime);
-  const int MAX = 2000;
-  //找到javaVmExt在 Runtime中的偏移地址
-  int offsetOfVmExt = findOffset(runtime, 0, MAX, javaVMExt);
-  LOGV("ArtHelper", "offsetOfVmExt: %d", offsetOfVmExt);
-  if (offsetOfVmExt < 0) {
-    return -1;
-  }
-  ArtHelper::runtime_instance_ =
-      reinterpret_cast<char *>(runtime) + offsetOfVmExt - offsetof(PartialRuntime, java_vm_);
-}
-
-int findMethods() {
-  void *handle = xdl_open("libart.so", XDL_DEFAULT);
   WalkStack_ = reinterpret_cast<void (*)(StackVisitor *, bool)>(xdl_dsym(handle,
                                                                          "_ZN3art12StackVisitor9WalkStackILNS0_16CountTransitionsE0EEEvb",
                                                                          nullptr));
@@ -106,8 +96,36 @@ int findMethods() {
   if (PrettyMethod_ == nullptr){
     return -1;
   }
+  return 1;
+}
+
+int ArtHelper::init(JNIEnv *env) {
+  char api_level_str[5];
+  __system_property_set("ro.build.version.sdk", api_level_str);
+  int api_level = atoi(api_level_str);
+  ArtHelper::api = api_level;
+  JavaVM *javaVM;
+  env->GetJavaVM(&javaVM);
+
+  auto *javaVMExt = reinterpret_cast<JavaVMExt *>(javaVM);
+  void *runtime = javaVMExt->runtime;
+
+  LOGV("ArtHelper", "runtime ptr: %p", runtime);
+  const int MAX = 2000;
+  //找到javaVmExt在 Runtime中的偏移地址
+  int offsetOfVmExt = findOffset(runtime, 0, MAX, javaVMExt);
+  LOGV("ArtHelper", "offsetOfVmExt: %d", offsetOfVmExt);
+  if (offsetOfVmExt < 0) {
+    return -1;
+  }
+  ArtHelper::runtime_instance_ =
+      reinterpret_cast<char *>(runtime) + offsetOfVmExt - offsetof(PartialRuntime, java_vm_);
+  load_symbols();
+  return 1;
 
 }
+
+
 
 void *ArtHelper::getThreadList() {
   return reinterpret_cast<PartialRuntime *>(runtime_instance_)->thread_list_;
@@ -120,7 +138,9 @@ void *ArtHelper::suspendThreadByPeer(jobject peer, SuspendReason suspendReason, 
 void *ArtHelper::SuspendThreadByThreadId(uint32_t threadId,
                                          SuspendReason suspendReason,
                                          bool *timed_out) {
-  return SuspendThreadByThreadId_(ArtHelper::getThreadList(),threadId, suspendReason, timed_out);
+  void *thread_list = ArtHelper::getThreadList();
+  LOGE("art","getThreadList success %p",thread_list);
+  return SuspendThreadByThreadId_(thread_list, threadId, suspendReason, timed_out);
 }
 
 bool ArtHelper::Resume(void *thread, SuspendReason suspendReason) {

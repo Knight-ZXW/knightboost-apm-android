@@ -54,10 +54,12 @@ dependencies {
 //    testImplementation 'junit:junit:4.+'
     androidTestImplementation(Config.TestLibs.androidxJunit)
     androidTestImplementation(Config.TestLibs.espressoCore)
-    project(path = ":free-android")
 //    implementation(project(path":apm"))
     implementation(project(path = ":apm"))
+    implementation(project(path = ":sliver"))
     implementation(project(path = ":free-android"))
+
+    implementation("io.hexhacking.xcrash:xcrash-android-lib:3.0.0")
 
     // define a BOM and its version
     implementation(platform(Config.Libs.okhttpBom))

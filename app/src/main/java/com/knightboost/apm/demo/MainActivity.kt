@@ -1,14 +1,15 @@
 package com.knightboost.apm.demo
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Looper
 import android.os.Message
 import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import com.knightboost.apm.cpu.monitor.CpuUsageMonitor
 import com.knightboost.freeandroid.LooperMessageObserver
 import com.knightboost.freeandroid.LooperUtil
-import java.lang.Exception
+import com.knightboost.sliver.Sliver
 
 class MainActivity : AppCompatActivity() {
 
@@ -50,6 +51,13 @@ class MainActivity : AppCompatActivity() {
                         i++
                     }
                 }
+            }.start()
+        }
+        findViewById<View>(R.id.btn_sliver_test).setOnClickListener {
+            Thread{}.start()
+            Sliver.init()
+            Thread {
+                Sliver.getSackTrace(Looper.getMainLooper().thread)
             }.start()
         }
 

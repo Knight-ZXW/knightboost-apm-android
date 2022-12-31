@@ -39,6 +39,10 @@ android {
             version = "3.18.1"
         }
     }
+    packagingOptions {
+        jniLibs.excludes.add("**/libbytehook.so")
+        jniLibs.excludes.add("**/libxdl.so")
+    }
 
 }
 
