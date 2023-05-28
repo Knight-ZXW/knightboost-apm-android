@@ -18,7 +18,7 @@ android {
     defaultConfig {
         applicationId = "com.knightboost.apm.demo"
         targetSdk = Config.Android.targetSdkVersion
-        minSdk = Config.Android.minSdkVersionNdk
+        minSdk = Config.Android.minSdkVersion
         testInstrumentationRunner = Config.TestLibs.androidJUnitRunner
         versionCode = 1
         versionName = "1.0"
@@ -44,6 +44,7 @@ dependencies {
     implementation(Config.Libs.androidxCoreKtx)
     implementation(Config.Libs.kotlinStdLib)
     implementation(Config.Libs.appCompat)
+    api("io.github.knight-zxw:looper-free:0.0.1-beta")
 
     implementation(Config.Libs.material)
     implementation(Config.Libs.constraintLayout)
@@ -51,13 +52,11 @@ dependencies {
 //    implementation 'com.volcengine:apm_insight:1.4.5.cn'
 //    //apm稳定性组件
 //    implementation 'com.volcengine:apm_insight_crash:1.4.3'
-//    testImplementation 'junit:junit:4.+'
+    testImplementation("junit:junit:4.+")
     androidTestImplementation(Config.TestLibs.androidxJunit)
     androidTestImplementation(Config.TestLibs.espressoCore)
 //    implementation(project(path":apm"))
     implementation(project(path = ":apm"))
-    implementation(project(path = ":sliver"))
-    implementation(project(path = ":free-android"))
 
     implementation("io.hexhacking.xcrash:xcrash-android-lib:3.0.0")
 

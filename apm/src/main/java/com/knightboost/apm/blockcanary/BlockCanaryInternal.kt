@@ -2,12 +2,14 @@ package com.knightboost.apm.blockcanary
 
 import android.app.Application
 import android.os.*
-import com.knightboost.apm.looper.LooperMonitor
 import com.knightboost.apm.stacksampler.StackSampler
 import com.knightboost.apm.util.ApmExecutors
 import com.knightboost.apm.util.FastTimer
+import com.knightboost.messageobserver.MessageObserver
+import com.knightboost.messageobserver.MessageObserverManager
 
-internal object BlockCanaryInternal {
+
+internal object BlockCanaryInternal : MessageObserver {
 
     @Suppress("ObjectPropertyName")
     private var _application: Application? = null
@@ -64,36 +66,14 @@ internal object BlockCanaryInternal {
         start()
     }
 
-    private val messageListener = object : LooperMonitor.MessageDispatchListener() {
 
-        override fun onDispatchStart(x: String?) {
-            super.onDispatchStart(x)
-            val messageInfo = BlockInfo()
-            messageInfo.startTime = FastTimer.currentTimeMillis()
-            curBlockInfo = messageInfo
-            handler.postDelayed(SlowMessageWatchdog(messageInfo), blockCanaryConfig.blockMaxThresholdTime.toLong())
-        }
-
-        override fun onDispatchEnd(x: String?) {
-            super.onDispatchEnd(x)
-            handler.removeCallbacksAndMessages(null)
-            val messageInfo = curBlockInfo ?: return
-            messageInfo.endTime = FastTimer.currentTimeMillis()
-            if (messageInfo.costTime() > blockCanaryConfig.blockThresholdTime) {
-                onBlockDetect(messageInfo)
-            }
-            messageInfo.dispatchFinish = true
-        }
-
-    }
 
     fun start() {
-        LooperMonitor.mainThreadLooperMonitor().addListener(messageListener)
+        MessageObserverManager.getMain().addMessageObserver(this)
         stackSampler.startSampling()
     }
 
     fun stop() {
-        LooperMonitor.mainThreadLooperMonitor().removeListener(messageListener)
         stackSampler.stopSampling()
     }
 
@@ -127,5 +107,22 @@ internal object BlockCanaryInternal {
             blockInfo.endTime = FastTimer.currentTimeMillis()
             onBlockDetect(blockInfo)
         }
+    }
+
+    override fun onMessageDispatchStarting(msg: String?) {
+        val messageInfo = BlockInfo()
+        messageInfo.startTime = FastTimer.currentTimeMillis()
+        curBlockInfo = messageInfo
+        handler.postDelayed(SlowMessageWatchdog(messageInfo), blockCanaryConfig.blockMaxThresholdTime.toLong())
+    }
+
+    override fun onMessageDispatched(msg: String?, message: Message?) {
+        handler.removeCallbacksAndMessages(null)
+        val messageInfo = curBlockInfo ?: return
+        messageInfo.endTime = FastTimer.currentTimeMillis()
+        if (messageInfo.costTime() > blockCanaryConfig.blockThresholdTime) {
+            onBlockDetect(messageInfo)
+        }
+        messageInfo.dispatchFinish = true
     }
 }

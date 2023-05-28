@@ -7,8 +7,6 @@ import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.knightboost.apm.cpu.monitor.CpuUsageMonitor
-import com.knightboost.freeandroid.LooperMessageObserver
-import com.knightboost.freeandroid.LooperUtil
 import com.knightboost.sliver.Sliver
 
 class MainActivity : AppCompatActivity() {
@@ -23,21 +21,6 @@ class MainActivity : AppCompatActivity() {
             .setOnClickListener {
                 Log.e("CPUM"," is \n"+Test.printCpu())
                 cpuUsageMonitor.start()
-                LooperUtil.setObserver(object:LooperMessageObserver{
-                    override fun messageDispatchStarting(): Any {
-                        Log.e("looper","线程id ${Thread.currentThread().id} -> messageDispatchStarting")
-                        return  ""
-                    }
-
-                    override fun messageDispatched(token: Any?, msg: Message) {
-                        Log.e("looper","线程id ${Thread.currentThread().id} messageDispatched ${msg}")
-                    }
-
-                    override fun dispatchingThrewException(token: Any?, msg: Message?, exception: Exception?) {
-                        Log.e("looper","线程id ${Thread.currentThread().id} dispatchingThrewException")
-                    }
-
-                })
 
             }
 
@@ -55,9 +38,7 @@ class MainActivity : AppCompatActivity() {
         }
         findViewById<View>(R.id.btn_sliver_test).setOnClickListener {
             Thread{}.start()
-            Sliver.init()
             Thread {
-                Sliver.getSackTrace(Looper.getMainLooper().thread)
             }.start()
         }
 

@@ -2,7 +2,6 @@ package com.knightboost.apm.anrtrace
 
 import android.annotation.SuppressLint
 import android.os.*
-import com.knightboost.apm.looper.LooperMonitor
 import com.knightboost.apm.util.ReflectUtils
 import java.lang.reflect.Field
 
@@ -26,25 +25,8 @@ import java.lang.reflect.Field
     private lateinit var messageNextFiled: Field
     private lateinit var mQueueField: Field
 
-    fun init() {
-        mQueueField = Looper::class.java.getDeclaredField("mQueue")
-        mQueueField.isAccessible = true
-        messageNextFiled = Message::class.java.getDeclaredField("next")
-        messageNextFiled.isAccessible = true
-    }
 
-    @SuppressLint("DiscouragedPrivateApi") fun obtainLooperWaitingMsg() {
-        var messageQueue: MessageQueue? = null
-        if (Build.VERSION.SDK_INT <= 23) {
-            messageQueue = mQueueField.get(Looper.getMainLooper()) as MessageQueue
-        } else {
-            messageQueue = Looper.getMainLooper().queue
-        }
-        var mMessages = ReflectUtils.reflect(messageQueue).field("mMessages").get<Message>()
-        while (mMessages != null) {
-            mMessages = messageNextFiled.get(mMessages) as Message
-        }
 
-    }
+
 
 }

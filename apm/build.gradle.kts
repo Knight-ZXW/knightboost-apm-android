@@ -51,13 +51,15 @@ dependencies {
     implementation(Config.Libs.gson)
     implementation(Config.TestLibs.androidxTestCoreKtx)
     api("com.github.tiann:FreeReflection:3.1.0")
+    api("io.github.knight-zxw:looper-free:0.0.1-beta")
     api("io.github.windysha:bypassHiddenApiRestriction:1.1.0")
     implementation("android.arch.lifecycle:extensions:1.1.1")
     implementation("androidx.startup:startup-runtime:1.2.0-alpha01")
 //    compileOnly project()
     //":free-android"
-    compileOnly(project(path =":free-android"))
+//    compileOnly(project(path =":free-android"))
     implementation("io.github.knight-zxw:lancet-runtime:0.0.3")
+    implementation("io.github.knight-zxw:message-observer:0.0.1-beta")
 
     testImplementation(kotlin(Config.kotlinStdLib, KotlinCompilerVersion.VERSION))
     testImplementation(Config.TestLibs.robolectric)

@@ -2,6 +2,7 @@ package com.knightboost.apm;
 
 import android.util.Log;
 
+
 public class ApmSafety {
 
     public static void handleException(String message,Throwable e){
