@@ -48,6 +48,9 @@ dependencies {
 
     implementation(Config.Libs.material)
     implementation(Config.Libs.constraintLayout)
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("com.google.android.material:material:1.4.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 //    //apm性能组件
 //    implementation 'com.volcengine:apm_insight:1.4.5.cn'
 //    //apm稳定性组件

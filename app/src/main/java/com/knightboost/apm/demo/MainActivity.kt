@@ -4,16 +4,20 @@ import android.os.Bundle
 import android.os.Looper
 import android.os.Message
 import android.util.Log
+import android.util.Xml
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.knightboost.apm.cpu.monitor.CpuUsageMonitor
-import com.knightboost.sliver.Sliver
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        var parser = resources.getLayout(R.layout.activity_main)
+        parser.next()
+        val attributeSet = Xml.asAttributeSet(parser)
+
 
         val config = CpuUsageMonitor.Config()
         val cpuUsageMonitor = CpuUsageMonitor(config)

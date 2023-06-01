@@ -25,8 +25,6 @@ import android.view.View
 import android.view.ViewTreeObserver
 import androidx.annotation.RequiresApi
 import com.knightboost.apm.R
-import com.knightboost.apm.fps.jankstats.FrameData
-import com.shizhuang.duapp.libs.duapm2.metrics.frame.JankStatsBaseImpl
 import java.lang.ref.WeakReference
 import java.lang.reflect.Field
 

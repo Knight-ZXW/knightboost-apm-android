@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.shizhuang.duapp.libs.duapm2.metrics.frame
+package com.knightboost.apm.fps.jankstats
 
 import com.knightboost.apm.fps.jankstats.JankStats
 

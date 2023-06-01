@@ -42,7 +42,8 @@ class AppStartTracer(
 
     }
 
-    private var isRegisteredForLifecycleCallbacks = false;
+    private var isRegisteredForLifecycleCallbacks = false
+
     private var appContext: Context? = null
 
     /**
@@ -53,7 +54,6 @@ class AppStartTracer(
     /**
      * The first time onResume() of any activity is called, the activity is saved as appStartActivity
      */
-
     private var appStartActivity: WeakReference<Activity>? = null
 
     /**
@@ -103,6 +103,8 @@ class AppStartTracer(
         launchActivity = WeakReference(activity)
         onCreateTime = Clock.getTimer()
         //todo tooLateToInitUi detect
+
+        //record appCreate -> firstActivity onCreate time
     }
 
     private fun getDurationMicrosSinceAppStart(end: Timer): Long {
@@ -117,14 +119,13 @@ class AppStartTracer(
     }
 
     override fun onActivityResumed(activity: Activity) {
-        if (onStartTime!=null){
+        if (onResumeTime!=null){
             return
         }
         onResumeTime =Clock.getTimer()
         appStartActivity =WeakReference(activity)
 
         //Log the app start trace in a non-main thread
-
 
         //first resumed activity detected, unregister listeners
         if (isRegisteredForLifecycleCallbacks){
@@ -148,21 +149,25 @@ class AppStartTracer(
     private fun logAppStartupTrace(){
 
 
-
     }
 
 }
 
 data class AppStartupTraceConfig(
     /**
-     * 闪屏页类名，默认到该页面时 应用启动性能检测的流程结束
+     * 闪屏页类名
      */
     val splashActivityClassName: String,
 
     /**
-     * 手动配置启动流程结束点
+     * 主页类名，默认到该页面时 应用启动性能检测的流程结束
      */
-    val customStartupEnd: Boolean,
+    val mainActivityClassName: String,
+
+    /**
+     * 定义冷启动流程 慢启动的阈值 (ms)
+     */
+    val slowStartupThreshold:Long
 ) {
 
 }

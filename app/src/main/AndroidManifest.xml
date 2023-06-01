@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:overrideLibrary="com.knightboost.messageobserver"
-    package="com.knightboost.apm.demo">
-    <uses-sdk tools:overrideLibrary="me.weishu.freereflection"/>
+    package="com.knightboost.apm.demo"
+    tools:overrideLibrary="com.knightboost.messageobserver">
+
+    <uses-sdk tools:overrideLibrary="me.weishu.freereflection" />
 
     <application
         android:name=".App"
@@ -14,13 +15,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MoonLightApm">
         <activity
-            android:name=".MainActivity"
+            android:name=".SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
         </activity>
     </application>
 

@@ -21,8 +21,6 @@ import android.os.Build
 import android.view.View
 import android.view.Window
 import androidx.annotation.UiThread
-import com.knightboost.apm.fps.jankstats.FrameData
-import com.shizhuang.duapp.libs.duapm2.metrics.frame.JankStatsBaseImpl
 import java.lang.IllegalStateException
 import java.util.concurrent.Executor
 
